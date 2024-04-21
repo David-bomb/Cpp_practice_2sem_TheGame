@@ -1,4 +1,5 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+
+#include "../level/level.h"
 
 void game();
