@@ -1,29 +1,29 @@
 #include "objects.h"
 
 Shapes::Obj::Obj() {
-	_width = _heigth = -1;
-	point = sf::Vector2f();
+	size = { 0,0 };
+	position = sf::Vector2f();
 	created = false;
 }
 
 Shapes::Obj::Obj(int x, int y, int width, int height) {
-	point = sf::Vector2f(x, y); // Задаем значение точки, тут пока оно не используется, но в других объектах будет
-	_width = width;
-	_heigth = height;
+	position = sf::Vector2f(x, y); // Задаем значение точки, тут пока оно не используется, но в других объектах будет
+	size = sf::Vector2f(width, height);
 
-	if (!texture.loadFromFile("Texture.png")) { // Проверка на успешность загрузки текстуры. 
+	if (!texture.loadFromFile(Leveling::generate_path("Texture.png"))) { // Проверка на успешность загрузки текстуры. 
 		//Пока что Texture.png лежит в папке с .exe файлом, но в будущем надо будет найти способ сделать по-человечески
 		std::cout << "Image loading failed.\n";
 	}
 
 	sprite.setTexture(texture);
-	sprite.setTextureRect(sf::IntRect(x, y, width, height)); // Даем текстуре форму
-	sprite.setColor(sf::Color(0, 0, 255));
+	sprite.setTextureRect(sf::IntRect(0, 0, width, height)); // Даем текстуре форму
+	sprite.setPosition(position);
+	//sprite.setColor(sf::Color(0, 0, 255));
 	created = true;
 }
 
 bool Shapes::Obj::IsInRect(const sf::Vector2f& p) const {
-	return ((point.x < p.x) && (p.x < point.x + _width) && (point.y < p.y) && (p.y < point.y + _heigth)); // Проверка условий принадлежности к области
+	return ((position.x < p.x) && (p.x < position.x + size.x) && (position.y < p.y) && (p.y < position.y + size.y)); // Проверка условий принадлежности к области
 }
 
 void Shapes::Obj::drawer(sf::RenderWindow& window) const {
@@ -33,4 +33,42 @@ void Shapes::Obj::drawer(sf::RenderWindow& window) const {
 	else {
 		std::cout << "ERR: Attempt to draw empty object.\n";
 	}
+}
+
+
+
+Shapes::Obj::Obj(const std::string& name, const sf::Vector2f& position, const sf::Vector2f& size): position(position), size(size) {
+	if (!texture.loadFromFile(Leveling::generate_path(name))) { // Проверка на успешность загрузки текстуры. 
+		//Пока что Texture.png лежит в папке с .exe файлом, но в будущем надо будет найти способ сделать по-человечески
+		std::cout << "Image loading failed.\n";
+	}
+	sprite.setTexture(texture);
+	sprite.setTextureRect(sf::IntRect(0, 0, (int)size.x, (int)size.y)); // Даем текстуре форму
+	sprite.setPosition(position);
+	created = true;
+}
+
+sf::Vector2f Shapes::Obj::get_position() const{
+	return position;
+}
+
+sf::Vector2f Shapes::Obj::get_size() const {
+	return size;
+}
+
+float Shapes::Obj::left_boarder() const {
+	return position.x;
+}
+float Shapes::Obj::right_boarder() const {
+	return position.x + size.x;
+}
+float Shapes::Obj::up_boarder() const {
+	return position.y;
+}
+float Shapes::Obj::down_boarder() const {
+	return position.y + size.y;
+}
+
+bool Shapes::Obj::is_passable() const {
+	return passable;
 }

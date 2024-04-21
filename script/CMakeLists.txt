@@ -14,12 +14,14 @@ FetchContent_MakeAvailable(SFML)
 set(${project}_SOURCES
         main.cpp
         "game/game.cpp"
+        "level/level.cpp"
         "objects/objects.cpp"
         "player/player.cpp")
 
 set(${project}_HEADERS
         "constants/constants.h"
         "game/game.h"
+        "level/level.h"
         "objects/objects.h"
         "player/player.h")
 
