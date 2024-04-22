@@ -2,8 +2,15 @@
 
 Moving::Movable::Movable() : y_speed(0), position(0, 0), size(0, 0), mass(0) { ; }
 
+Moving::Movable::Movable(const Movable& mov) : y_speed(0), position(mov.position), size(mov.size), mass(mov.mass) {
+	texture.loadFromImage(mov.texture.copyToImage());
+	sprite.setTexture(texture);
+	sprite.setPosition(position);
+	sprite.setTextureRect({ 0, 0, (int)size.x, (int)size.y });
+}
+
 Moving::Movable::Movable(const std::string& path, const sf::Vector2f& position, const sf::Vector2f& size, float mass) : y_speed(0), position(position), size(size), mass(mass) {
-	if (!texture.loadFromFile(path)) {
+	if (!texture.loadFromFile(Leveling::generate_path(path))) {
 		std::cout << "Texture loading failed.\n";
 	}
 	sprite.setTexture(texture);
@@ -18,7 +25,7 @@ int Moving::Movable::draw(sf::RenderWindow& window) const {
 
 int Moving::Movable::update(float time, const std::vector<Shapes::Obj>& arr) {
 	if (is_levitating(arr)) { // гравитация
-		y_speed -= G * time;
+		y_speed -= G * time * mass;
 	}
 	move_vertical(time, arr);
 	if (y_speed > 0) {
@@ -72,6 +79,8 @@ float Moving::Movable::down_boarder() const {
 
 Moving::Player::Player() : Movable({ 0, 0 }, { 0, 0 }, { PLAYER_WIDTH, PLAYER_HEIGHT }, 0), state(State::Stand) { ; }
 
+Moving::Player::Player(const Player& p) : Movable(p), state(State::Stand) { ; }
+
 Moving::Player::Player(const std::string& path, const sf::Vector2f& position, float mass) : Movable(path, position, {PLAYER_WIDTH, PLAYER_HEIGHT}, mass), state(State::Stand) { ; }
 
 int Moving::Player::move_on(float time, int dir, const std::vector<Shapes::Obj>& arr) {
@@ -116,7 +125,7 @@ int Moving::Player::update(float time, const std::vector<Shapes::Obj>& arr) {
 		state = State(st);
 	}
 	switch_texture();
-	return 0;
+	return 1;
 }
 
 int Moving::Player::jump(const std::vector<Shapes::Obj>& arr) {
@@ -138,4 +147,17 @@ bool Moving::Movable::is_levitating(const std::vector<Shapes::Obj>& arr) {
 		}
 	}
 	return true;
+}
+
+Moving::Player& Moving::Player::operator=(const Player& p) {
+	y_speed=0;
+	position=p.position;
+	size=p.size;
+	mass=p.mass;
+	state = State::Stand;
+	texture.loadFromImage(p.texture.copyToImage());
+	sprite.setTexture(texture);
+	sprite.setPosition(position);
+	sprite.setTextureRect({ 0, 0, (int)size.x, (int)size.y });
+	return *this;
 }

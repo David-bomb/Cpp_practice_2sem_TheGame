@@ -17,6 +17,7 @@ namespace Moving {
 		bool is_levitating(const std::vector<Shapes::Obj>&); // находится ли в воздухе
 	public:
 		Movable();
+		Movable(const Movable&);
 		Movable(const std::string&, const sf::Vector2f&, const sf::Vector2f&, float);  // конструктор
 		int draw(sf::RenderWindow&) const; // вывод текстуры
 		virtual int update(float, const std::vector<Shapes::Obj>&); // обновление состояния
@@ -33,9 +34,11 @@ namespace Moving {
 		int switch_texture(); // переключение текстур (анимация)
 	public:
 		Player();
-		Player(const std::string&, const sf::Vector2f&, float);  // конструктор
+		Player(const Player&);
+		Player(const std::string&, const sf::Vector2f&, float = 1);  // конструктор
 		int update(float, const std::vector<Shapes::Obj>&); // обновление игрока
 		int jump(const std::vector<Shapes::Obj>&); // прыжок
+		Player& operator =(const Player&);
 	};
 }
 
