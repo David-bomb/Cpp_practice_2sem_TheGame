@@ -17,7 +17,7 @@ std::string Leveling::generate_sublevel_original_name(int number, int n) {
 Leveling::SubLevel::SubLevel(int n, int number) : n(n), number(number) { ; }
 
 int Leveling::SubLevel::start(sf::RenderWindow& window) {
-	read_from_file(generate_path(generate_sublevel_original_name(number, n)));
+	read_from_file(generate_path(generate_sublevel_name(number, n)));
 	sf::Clock clock;
 	while (window.isOpen()) {
 		double time = clock.getElapsedTime().asMicroseconds();
@@ -27,24 +27,39 @@ int Leveling::SubLevel::start(sf::RenderWindow& window) {
 		{
 			if (event.type == sf::Event::Closed)
 			{
-				return n + 1;
+				exit(228);
 			}
 			if (event.type == sf::Event::KeyPressed) {
 				if (event.key.scancode == sf::Keyboard::Scan::W || event.key.scancode == sf::Keyboard::Scan::Up) {
-					player.jump(objects);
+					player.jump(objects, movables);
 				}
 			}
 		}
-		if (!player.update(time, objects)) {
-			restart();
+		for (int i = 0; i != movables.size(); ++i) {
+			movables[i].update(time, objects, movables);
 		}
-		window.clear();
-		player.draw(window);
-		for (int i = 0; i != objects.size(); ++i) {
-			objects[i].draw(window);
+		int result = player.update(time, objects, movables);
+		if (!player.is_alive()) {
+			return 0;
 		}
-		window.display();
+		if (result != 0) {
+			return n + result;
+		}
+		update_window(window);
 	}
+}
+
+int Leveling::SubLevel::update_window(sf::RenderWindow& window) {
+	window.clear();
+	player.draw(window);
+	for (int i = 0; i != movables.size(); ++i) {
+		movables[i].draw(window);
+	}
+	for (int i = 0; i != objects.size(); ++i) {
+		objects[i].draw(window);
+	}
+	window.display();
+	return 0;
 }
 
 int Leveling::SubLevel::restart() {
@@ -67,6 +82,8 @@ int Leveling::SubLevel::read_from_file(const std::string& path) {
 		std::string _name;
 		sf::Vector2f _pos;
 		sf::Vector2f _size;
+		bool _harmful;
+		bool _passable;
 		float _mass;
 		switch (obj) {
 		case Objects::Player:
@@ -74,8 +91,8 @@ int Leveling::SubLevel::read_from_file(const std::string& path) {
 			player = { "player.png", _pos};
 			break;
 		case Objects::Obj:
-			in >> _name >> _pos.x >> _pos.y >> _size.x >> _size.y;
-			objects.push_back({_name, _pos, _size});
+			in >> _name >> _pos.x >> _pos.y >> _size.x >> _size.y >> _harmful >> _passable;
+			objects.push_back({_name, _pos, _size, _harmful, _passable});
 			break;
 		case Objects::Movable:
 			in >> _name >> _pos.x >> _pos.y >> _size.x >> _size.y >> _mass;
@@ -105,7 +122,7 @@ int Leveling::Level::start(sf::RenderWindow& window) {
 			restart();
 			n = sublevels[0].start(window);
 		}
-		else if (n <= k) {
+		else if (n <= k && n > 0) {
 			n = sublevels[n - 1].start(window);
 		}
 		else {
@@ -119,8 +136,17 @@ int Leveling::Level::generate() const {
 	for (int i = 0; i != k; ++i) {
 		std::ifstream in(generate_path(generate_sublevel_original_name(number, i+1)));
 		std::ofstream out(generate_path(generate_sublevel_name(number, i + 1)));
+		char buffer[100];
+		bool flag = false;
 		while (!in.eof()) {
-			out << in.get();
+			if (flag) {
+				out << '\n';
+			}
+			else {
+				flag = true;
+			}
+			in.getline(buffer, sizeof(buffer));
+			out << buffer;
 		}
 		in.close();
 		out.close();
@@ -128,7 +154,10 @@ int Leveling::Level::generate() const {
 	return 0;
 }
 
-int Leveling::Level::restart() const {
+int Leveling::Level::restart() {
 	generate();
+	for (int i = 0; i != k; ++i) {
+		sublevels[i].restart();
+	}
 	return 0;
 }

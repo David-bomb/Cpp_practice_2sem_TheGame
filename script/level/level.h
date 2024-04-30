@@ -12,11 +12,12 @@ namespace Leveling {
 		Moving::Player player; // игрок
 		int number; // номер уровня
 		int n; // номер подуровня
+		int read_from_file(const std::string&); // считать подуровень из файла
+		int write_to_file(const std::string&); // записать подуровень в файл
+		int update_window(sf::RenderWindow&);
 	public:
 		SubLevel(int, int);
 		int start(sf::RenderWindow&);
-		int read_from_file(const std::string&); // считать подуровень из файла
-		int write_to_file(const std::string&); // записать подуровень в файл
 		int restart();
 	};
 
@@ -28,7 +29,7 @@ namespace Leveling {
 		Level(int, int);
 		int start(sf::RenderWindow&);
 		int generate() const;
-		int restart() const;
+		int restart();
 	};
 
 

@@ -1,6 +1,13 @@
-2 Texture.png 0 500 1000 100
-2 Texture.png 300 350 500 100
-2 Texture.png 300 100 400 100
-2 Texture.png 1200 500 500 450
-2 Texture.png 1400 430 3 3
+2 Texture.png 0 500 1000 100 0 0
+2 Texture.png 300 350 500 100 0 0
+2 Texture.png 300 100 400 100 0 0
+2 Texture.png 1200 500 500 450 0 0
+2 Texture.png 1380 430 3 3 0 0
+2 1000-7.jpg 1500 300 100 100 1 0
+2 nothing.png 300 0 200 100 1 1
+2 nothing.png 1000 300 200 100 0 1
+1 box.jpg 750 0 100 100 2
+1 box.jpg 450 250 100 100 2
+1 box.jpg 1550 0 100 100 2
+1 box.jpg 1350 0 100 100 2
 0 800 400

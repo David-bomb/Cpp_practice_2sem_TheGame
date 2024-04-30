@@ -24,7 +24,7 @@ namespace Shapes {
 	public:
 		Obj();
 		Obj(const Obj&);
-		Obj(const std::string&, const sf::Vector2f&, const sf::Vector2f&, bool = false, bool = false);
+		Obj(const std::string&, const sf::Vector2f&, const sf::Vector2f&, bool, bool);
 
 		void draw(sf::RenderWindow& window) const; // "Рисовальщик" для объекта Shapes::Obj
 
