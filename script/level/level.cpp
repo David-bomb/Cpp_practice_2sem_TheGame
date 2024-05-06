@@ -154,10 +154,7 @@ int Leveling::Level::generate() const {
 	return 0;
 }
 
-int Leveling::Level::restart() {
+int Leveling::Level::restart() const {
 	generate();
-	for (int i = 0; i != k; ++i) {
-		sublevels[i].restart();
-	}
 	return 0;
 }

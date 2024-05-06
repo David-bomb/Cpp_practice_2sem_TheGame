@@ -13,12 +13,12 @@ namespace Leveling {
 		int number; // номер уровня
 		int n; // номер подуровня
 		int read_from_file(const std::string&); // считать подуровень из файла
-		int write_to_file(const std::string&); // записать подуровень в файл
+		int write_to_file(const std::string&); // записать подуровень в файл (мертвая функция, можно удалить)
 		int update_window(sf::RenderWindow&);
 	public:
 		SubLevel(int, int);
-		int start(sf::RenderWindow&);
-		int restart();
+		int start(sf::RenderWindow&); // запуск подуровня
+		int restart(); // перезапуск
 	};
 
 	class Level {
@@ -27,9 +27,9 @@ namespace Leveling {
 		int k; // количество подуровней
 	public:
 		Level(int, int);
-		int start(sf::RenderWindow&);
-		int generate() const;
-		int restart();
+		int start(sf::RenderWindow&); // запуск уровня
+		int generate() const; // генерация
+		int restart() const; // перезапуск
 	};
 
 

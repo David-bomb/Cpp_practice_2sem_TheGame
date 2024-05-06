@@ -21,7 +21,7 @@ namespace Moving {
 		Movable(const std::string&, const sf::Vector2f&, const sf::Vector2f&, float);  // конструктор
 		int draw(sf::RenderWindow&) const; // вывод текстуры
 		virtual int update(float, const std::vector<Shapes::Obj>&, const std::vector<Movable>&); // обновление состояния
-		int move_on(float, const std::vector<Shapes::Obj>&, std::vector<Movable>&); // подвинуть за время, int ( -1 для влево; 1 для право)
+		int move_on(float, const std::vector<Shapes::Obj>&, std::vector<Movable>&); // подвинуть на расстояние
 		float get_mass() const;
 		float left_boarder() const;
 		float right_boarder() const;
@@ -42,7 +42,7 @@ namespace Moving {
 		Player(const std::string&, const sf::Vector2f&, float = 1);  // конструктор
 		int update(float, const std::vector<Shapes::Obj>&, std::vector<Movable>&); // обновление игрока
 		int jump(const std::vector<Shapes::Obj>&, const std::vector<Movable>&); // прыжок
-		bool is_alive() const;
+		bool is_alive() const; // жив ли персонаж
 		Player& operator =(const Player&);
 	};
 }

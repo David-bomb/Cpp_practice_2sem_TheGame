@@ -18,15 +18,15 @@ namespace Shapes {
 		sf::Vector2f size;
 		sf::Texture texture;
 		sf::Sprite sprite;
-		bool harmful;
-		bool passable;
+		bool harmful; // опасный (если не проходимый, то определения направления (следующий уровень true /предыдущий уровень false))
+		bool passable; // проходимый (если не проходимый, то служит для перехода между уровнями)
 		bool created;
 	public:
 		Obj();
 		Obj(const Obj&);
 		Obj(const std::string&, const sf::Vector2f&, const sf::Vector2f&, bool, bool);
 
-		void draw(sf::RenderWindow& window) const; // "Рисовальщик" для объекта Shapes::Obj
+		void draw(sf::RenderWindow& window) const;
 
 		sf::Vector2f get_position() const;
 		sf::Vector2f get_size() const;
