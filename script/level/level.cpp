@@ -12,22 +12,15 @@ std::string Leveling::generate_sublevel_original_name(int number, int n) {
 	return "levels/" + std::to_string(number) + '-' + std::to_string(n) + "-original.txt";
 }
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-Leveling::SubLevel::SubLevel(int n, int number) : n(n), number(number) {
-=======
 std::string Leveling::generate_sound_path(const std::string& name) {
 	return generate_path("sounds") + "/" + name;
 }
 
-=======
->>>>>>> d98d838ac3b43aa0dd7315395e41adc558d630b3
 
 
 Leveling::SubLevel::SubLevel(int n, int number) : n(n), number(number) { ; }
 
 int Leveling::SubLevel::start(sf::RenderWindow& window) {
-<<<<<<< HEAD
 	// Может быть сделаю отдельный класс для звуков, а то проделывание одних и тех же действий - плохое решение.
 	sf::SoundBuffer steper; //шаг
 	sf::SoundBuffer empty; // пустышка
@@ -48,10 +41,6 @@ int Leveling::SubLevel::start(sf::RenderWindow& window) {
 	sf::Clock clock;
 	double a = 0;
 	int result;
-=======
-	read_from_file(generate_path(generate_sublevel_name(number, n)));
-	sf::Clock clock;
->>>>>>> d98d838ac3b43aa0dd7315395e41adc558d630b3
 	while (window.isOpen()) {
 		double time = clock.getElapsedTime().asMicroseconds();
 		clock.restart();
@@ -64,18 +53,13 @@ int Leveling::SubLevel::start(sf::RenderWindow& window) {
 			}
 			if (event.type == sf::Event::KeyPressed) {
 				if (event.key.scancode == sf::Keyboard::Scan::W || event.key.scancode == sf::Keyboard::Scan::Up) {
-<<<<<<< HEAD
 					player.jump(objects, movables, jump);
-=======
-					player.jump(objects, movables);
->>>>>>> d98d838ac3b43aa0dd7315395e41adc558d630b3
 				}
 			}
 		}
 		for (int i = 0; i != movables.size(); ++i) {
 			movables[i].update(time, objects, movables);
 		}
-<<<<<<< HEAD
 		a += 0.01; // Может можно как-то связать со временем, посмотрим
 		if (a >= 1){ // таким образом мы задаем частоту шагов. чем выше предел a, тем реже шаги
 			result = player.update(time, objects, movables, step);
@@ -84,9 +68,6 @@ int Leveling::SubLevel::start(sf::RenderWindow& window) {
 		else {
 			result = player.update(time, objects, movables, emp);
 		}
-=======
-		int result = player.update(time, objects, movables);
->>>>>>> d98d838ac3b43aa0dd7315395e41adc558d630b3
 		if (!player.is_alive()) {
 			return 0;
 		}
@@ -95,10 +76,7 @@ int Leveling::SubLevel::start(sf::RenderWindow& window) {
 		}
 		update_window(window);
 	}
-<<<<<<< HEAD
 
-=======
->>>>>>> d98d838ac3b43aa0dd7315395e41adc558d630b3
 }
 
 int Leveling::SubLevel::update_window(sf::RenderWindow& window) {
@@ -115,10 +93,6 @@ int Leveling::SubLevel::update_window(sf::RenderWindow& window) {
 }
 
 int Leveling::SubLevel::restart() {
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> d98d838ac3b43aa0dd7315395e41adc558d630b3
 	read_from_file(generate_path(generate_sublevel_original_name(number, n)));
 	return 0;
 }
@@ -158,11 +132,6 @@ int Leveling::SubLevel::read_from_file(const std::string& path) {
 			break;
 		}
 	}
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> d98d838ac3b43aa0dd7315395e41adc558d630b3
 	in.close();
 	return 0;
 }
@@ -178,7 +147,6 @@ Leveling::Level::Level(int number, int k) : number(number), k(k) {
 
 int Leveling::Level::start(sf::RenderWindow& window) {
 	int n = sublevels[0].start(window);
-<<<<<<< HEAD
 	std::cout << n << std::endl;
 	sf::SoundBuffer deather; // Смерть
 	sf::Sound death;
@@ -207,17 +175,6 @@ int Leveling::Level::start(sf::RenderWindow& window) {
 		}
 		else {
 			std::cout << n << std::endl;
-=======
-	while (n != -1) {
-		if (n == 0) {
-			restart();
-			n = sublevels[0].start(window);
-		}
-		else if (n <= k && n > 0) {
-			n = sublevels[n - 1].start(window);
-		}
-		else {
->>>>>>> d98d838ac3b43aa0dd7315395e41adc558d630b3
 			break;
 		}
 	}
@@ -248,9 +205,5 @@ int Leveling::Level::generate() const {
 
 int Leveling::Level::restart() const {
 	generate();
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> d98d838ac3b43aa0dd7315395e41adc558d630b3
 	return 0;
 }

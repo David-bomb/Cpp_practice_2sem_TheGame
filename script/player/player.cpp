@@ -157,14 +157,6 @@ int Moving::Player::move_on(float time, int dir, const std::vector<Shapes::Obj>&
 	//std::cout << "GO\n";
 	if (dir > 0) { // вправо
 		for (int i = 0; i != arr.size(); ++i) { // не встречается с объектами
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-			if (!arr[i].is_passable() && ((arr[i].up_boarder() <= up_boarder() && down_boarder() <= arr[i].down_boarder()) || (up_boarder() <= arr[i].up_boarder() && arr[i].up_boarder() < down_boarder()) || (up_boarder() < arr[i].down_boarder() && arr[i].down_boarder() <= down_boarder()) || (up_boarder() <= arr[i].up_boarder() && arr[i].down_boarder() <= down_boarder())) && new_x < arr[i].left_boarder() && arr[i].left_boarder() < new_x + size.x) {
-				state = State::Stand;
-				new_x = arr[i].left_boarder() - size.x;
-=======
-=======
->>>>>>> d98d838ac3b43aa0dd7315395e41adc558d630b3
 			if (((arr[i].up_boarder() <= up_boarder() && down_boarder() <= arr[i].down_boarder()) || (up_boarder() <= arr[i].up_boarder() && arr[i].up_boarder() < down_boarder()) || (up_boarder() < arr[i].down_boarder() && arr[i].down_boarder() <= down_boarder()) || (up_boarder() <= arr[i].up_boarder() && arr[i].down_boarder() <= down_boarder())) && new_x < arr[i].left_boarder() && arr[i].left_boarder() < new_x + size.x) {
 				if (!arr[i].is_passable()) {
 					if (arr[i].is_harmful()) {
@@ -177,10 +169,7 @@ int Moving::Player::move_on(float time, int dir, const std::vector<Shapes::Obj>&
 					}
 				}
 				else {
-<<<<<<< HEAD
 					
-=======
->>>>>>> d98d838ac3b43aa0dd7315395e41adc558d630b3
 					if (arr[i].is_harmful()) {
 						return 1;
 					}
@@ -195,23 +184,11 @@ int Moving::Player::move_on(float time, int dir, const std::vector<Shapes::Obj>&
 				state = State::Right;
 				movables[i].move_on((new_x - position.x) / pow(1 + movables[i].get_mass() / mass, SLOWDOWN_KOEF), arr, movables);
 				new_x = movables[i].left_boarder() - size.x;
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> d98d838ac3b43aa0dd7315395e41adc558d630b3
 			}
 		}
 	}
 	else if (dir < 0) { // влево
 		for (int i = 0; i != arr.size(); ++i) { // не встречается с объектами
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-			if (!arr[i].is_passable() && ((arr[i].up_boarder() <= up_boarder() && down_boarder() <= arr[i].down_boarder()) || (up_boarder() <= arr[i].up_boarder() && arr[i].up_boarder() < down_boarder()) || (up_boarder() < arr[i].down_boarder() && arr[i].down_boarder() <= down_boarder()) || (up_boarder() <= arr[i].up_boarder() && arr[i].down_boarder() <= down_boarder())) && new_x < arr[i].right_boarder() && arr[i].right_boarder() < new_x + size.x) {
-				state = State::Stand;
-				new_x = arr[i].right_boarder();
-=======
-=======
->>>>>>> d98d838ac3b43aa0dd7315395e41adc558d630b3
 			if (((arr[i].up_boarder() <= up_boarder() && down_boarder() <= arr[i].down_boarder()) || (up_boarder() <= arr[i].up_boarder() && arr[i].up_boarder() < down_boarder()) || (up_boarder() < arr[i].down_boarder() && arr[i].down_boarder() <= down_boarder()) || (up_boarder() <= arr[i].up_boarder() && arr[i].down_boarder() <= down_boarder())) && new_x < arr[i].right_boarder() && arr[i].right_boarder() < new_x + size.x) {
 				if (!arr[i].is_passable()) {
 					if (arr[i].is_harmful()) {
@@ -224,10 +201,7 @@ int Moving::Player::move_on(float time, int dir, const std::vector<Shapes::Obj>&
 					}
 				}
 				else {
-<<<<<<< HEAD
 					
-=======
->>>>>>> d98d838ac3b43aa0dd7315395e41adc558d630b3
 					if (arr[i].is_harmful()) {
 						return 1;
 					}
@@ -242,10 +216,6 @@ int Moving::Player::move_on(float time, int dir, const std::vector<Shapes::Obj>&
 				state = State::Left;
 				movables[i].move_on((new_x - position.x) / pow(1 + movables[i].get_mass() / mass, SLOWDOWN_KOEF), arr, movables);
 				new_x = movables[i].right_boarder();
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> d98d838ac3b43aa0dd7315395e41adc558d630b3
 			}
 		}
 	}
@@ -254,12 +224,6 @@ int Moving::Player::move_on(float time, int dir, const std::vector<Shapes::Obj>&
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-int Moving::Player::update(float time, const std::vector<Shapes::Obj>& arr) {
-=======
-=======
->>>>>>> d98d838ac3b43aa0dd7315395e41adc558d630b3
 int Moving::Player::move_vertical(float time, const std::vector<Shapes::Obj>& arr, const std::vector<Movable>& movables) {
 	float new_y = position.y - y_speed * time;
 	if (y_speed > 0) { // вверх
@@ -327,13 +291,8 @@ int Moving::Player::move_vertical(float time, const std::vector<Shapes::Obj>& ar
 	return 0;
 }
 
-<<<<<<< HEAD
 int Moving::Player::update(float time, const std::vector<Shapes::Obj>& arr, std::vector<Movable>& movables,  sf::Sound& sound) {
 
->>>>>>> Stashed changes
-=======
-int Moving::Player::update(float time, const std::vector<Shapes::Obj>& arr, std::vector<Movable>& movables) {
->>>>>>> d98d838ac3b43aa0dd7315395e41adc558d630b3
 	if (((int)(sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) + (int)(sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))) % 2 == 0) {
 		state = State::Stand;
 	}
@@ -386,18 +345,8 @@ int Moving::Player::update(float time, const std::vector<Shapes::Obj>& arr, std:
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-int Moving::Player::jump(const std::vector<Shapes::Obj>& arr) {
-	if (!is_levitating(arr)) {
-=======
 int Moving::Player::jump(const std::vector<Shapes::Obj>& arr, const std::vector<Movable>& movables, sf::Sound& jump) {
 	if (!is_levitating(arr, movables)) {
->>>>>>> Stashed changes
-=======
-int Moving::Player::jump(const std::vector<Shapes::Obj>& arr, const std::vector<Movable>& movables) {
-	if (!is_levitating(arr, movables)) {
->>>>>>> d98d838ac3b43aa0dd7315395e41adc558d630b3
 		y_speed = PLAYER_JUMP_SPEED;
 		jump.play();
 	}
