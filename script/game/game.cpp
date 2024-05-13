@@ -3,6 +3,7 @@
 void game() {
     auto window = sf::RenderWindow{ sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Game"};
     window.setFramerateLimit(144);
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     Moving::Player player(Leveling::generate_path("player.png"), {800, 400}, 1);
     Shapes::Obj obj1(0, 500, 1000, 100);
@@ -54,4 +55,9 @@ void game() {
     first.start(window);
     window.close();
 >>>>>>> Stashed changes
+=======
+    Leveling::Level first(1, 2);
+    first.start(window);
+    window.close();
+>>>>>>> d98d838ac3b43aa0dd7315395e41adc558d630b3
 }

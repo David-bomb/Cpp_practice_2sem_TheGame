@@ -20,32 +20,23 @@ namespace Shapes {
 		sf::Vector2f size;
 		sf::Texture texture;
 		sf::Sprite sprite;
+		bool harmful; // опасный (если не проходимый, то определения направления (следующий уровень true /предыдущий уровень false))
+		bool passable; // проходимый (если не проходимый, то служит для перехода между уровнями)
 		bool created;
-		bool harmful = 0;
-		bool passable = 0;
 	public:
-
 		Obj();
+		Obj(const Obj&);
+		Obj(const std::string&, const sf::Vector2f&, const sf::Vector2f&, bool, bool);
 
-		Obj(int x, int y, int width, int height);
-
-		Obj(const std::string&, const sf::Vector2f&, const sf::Vector2f&);
-
-		bool IsInRect(const sf::Vector2f& p) const; // Находится ли точка внутри прямоугольника?
-
-		void drawer(sf::RenderWindow& window) const; // "Рисовальщик" для объекта Shapes::Obj
-
-
+		void draw(sf::RenderWindow& window) const;
 
 		sf::Vector2f get_position() const;
-
 		sf::Vector2f get_size() const;
-
 		float left_boarder() const;
 		float right_boarder() const;
 		float up_boarder() const;
 		float down_boarder() const;
-
 		bool is_passable() const;
+		bool is_harmful() const;
 	};
 }
