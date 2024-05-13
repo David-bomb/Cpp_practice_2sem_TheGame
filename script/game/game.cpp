@@ -3,6 +3,7 @@
 void game() {
     auto window = sf::RenderWindow{ sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Game"};
     window.setFramerateLimit(144);
+<<<<<<< Updated upstream
     Moving::Player player(Leveling::generate_path("player.png"), {800, 400}, 1);
     Shapes::Obj obj1(0, 500, 1000, 100);
     Shapes::Obj obj2(300, 350, 500, 100);
@@ -40,4 +41,17 @@ void game() {
         }
         window.display();
     }
+=======
+    //sf::SoundBuffer buffer;
+    //if (!buffer.loadFromFile(Leveling::generate_sound_path("step.wav"))) { // TODO : удалить после теста
+    //    //std::cout << Leveling::generate_sound_path("step.mp3");
+
+    //}
+    //sf::Sound sound;
+    //sound.setBuffer(buffer);
+    //sound.play();
+    Leveling::Level first(1, 2);
+    first.start(window);
+    window.close();
+>>>>>>> Stashed changes
 }

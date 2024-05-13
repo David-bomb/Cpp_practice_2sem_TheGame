@@ -33,4 +33,5 @@ namespace Leveling {
 	std::string generate_path(const std::string&);
 	std::string generate_sublevel_name(int, int);
 	std::string generate_sublevel_original_name(int, int);
+	std::string generate_sound_path(const std::string&);
 }

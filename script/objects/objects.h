@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -8,6 +9,7 @@
 
 namespace Leveling {
 	std::string generate_path(const std::string&);
+	std::string generate_sound_path(const std::string& name);
 }
 
 namespace Shapes {

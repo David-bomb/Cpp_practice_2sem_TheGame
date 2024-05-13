@@ -33,9 +33,18 @@ namespace Moving {
 		int switch_texture(); // переключение текстур (анимация)
 	public:
 		Player();
+<<<<<<< Updated upstream
 		Player(const std::string&, const sf::Vector2f&, float);  // конструктор
 		int update(float, const std::vector<Shapes::Obj>&); // обновление игрока
 		int jump(const std::vector<Shapes::Obj>&); // прыжок
+=======
+		Player(const Player&);
+		Player(const std::string&, const sf::Vector2f&, float = 1);  // конструктор
+		int update(float, const std::vector<Shapes::Obj>&, std::vector<Movable>&, sf::Sound&); // обновление игрока
+		int jump(const std::vector<Shapes::Obj>&, const std::vector<Movable>&, sf::Sound&); // прыжок
+		bool is_alive() const; // жив ли персонаж
+		Player& operator =(const Player&);
+>>>>>>> Stashed changes
 	};
 }
 

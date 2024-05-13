@@ -33,6 +33,7 @@ add_executable(${project}
         ${${project}_SOURCE_LIST})
 
 target_link_libraries(${project} PRIVATE sfml-graphics)
+target_link_libraries(${project} PRIVATE sfml-audio)
 target_compile_features(${project} PRIVATE cxx_std_17)
 
 if(WIN32)
