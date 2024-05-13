@@ -5,15 +5,66 @@ std::string Leveling::generate_path(const std::string& name) {
 }
 
 std::string Leveling::generate_sublevel_name(int number, int n) {
-	return std::to_string(number) + '-' + std::to_string(n) + ".txt";
+	return "levels/" + std::to_string(number) + '-' + std::to_string(n) + ".txt";
 }
 
 std::string Leveling::generate_sublevel_original_name(int number, int n) {
-	return std::to_string(number) + '-' + std::to_string(n) + "-original.txt";
+	return "levels/" + std::to_string(number) + '-' + std::to_string(n) + "-original.txt";
 }
 
-Leveling::SubLevel::SubLevel(int n, int number) : n(n), number(number) {
+
+
+Leveling::SubLevel::SubLevel(int n, int number) : n(n), number(number) { ; }
+
+int Leveling::SubLevel::start(sf::RenderWindow& window) {
+	read_from_file(generate_path(generate_sublevel_name(number, n)));
+	sf::Clock clock;
+	while (window.isOpen()) {
+		double time = clock.getElapsedTime().asMicroseconds();
+		clock.restart();
+		time /= TIME_KOEF;
+		for (auto event = sf::Event{}; window.pollEvent(event);)
+		{
+			if (event.type == sf::Event::Closed)
+			{
+				exit(228);
+			}
+			if (event.type == sf::Event::KeyPressed) {
+				if (event.key.scancode == sf::Keyboard::Scan::W || event.key.scancode == sf::Keyboard::Scan::Up) {
+					player.jump(objects, movables);
+				}
+			}
+		}
+		for (int i = 0; i != movables.size(); ++i) {
+			movables[i].update(time, objects, movables);
+		}
+		int result = player.update(time, objects, movables);
+		if (!player.is_alive()) {
+			return 0;
+		}
+		if (result != 0) {
+			return n + result;
+		}
+		update_window(window);
+	}
+}
+
+int Leveling::SubLevel::update_window(sf::RenderWindow& window) {
+	window.clear();
+	player.draw(window);
+	for (int i = 0; i != movables.size(); ++i) {
+		movables[i].draw(window);
+	}
+	for (int i = 0; i != objects.size(); ++i) {
+		objects[i].draw(window);
+	}
+	window.display();
+	return 0;
+}
+
+int Leveling::SubLevel::restart() {
 	read_from_file(generate_path(generate_sublevel_original_name(number, n)));
+	return 0;
 }
 
 int Leveling::SubLevel::read_from_file(const std::string& path) {
@@ -24,22 +75,24 @@ int Leveling::SubLevel::read_from_file(const std::string& path) {
 		std::cout << "Error with reading file\n";
 		return 1;
 	}
-	while (in.peek()) {
+	while (!in.eof()) {
 		int temp;
 		in >> temp;
 		Objects obj = Objects(temp);
 		std::string _name;
 		sf::Vector2f _pos;
 		sf::Vector2f _size;
+		bool _harmful;
+		bool _passable;
 		float _mass;
 		switch (obj) {
 		case Objects::Player:
-			in >> _pos.x >> _pos.y >> _mass;
-			player = { generate_path("player.png"), _pos, _mass };
+			in >> _pos.x >> _pos.y;
+			player = { "player.png", _pos};
 			break;
 		case Objects::Obj:
-			in >> _name >> _pos.x >> _pos.y >> _size.x >> _size.y;
-			objects.push_back({_name, _pos, _size});
+			in >> _name >> _pos.x >> _pos.y >> _size.x >> _size.y >> _harmful >> _passable;
+			objects.push_back({_name, _pos, _size, _harmful, _passable});
 			break;
 		case Objects::Movable:
 			in >> _name >> _pos.x >> _pos.y >> _size.x >> _size.y >> _mass;
@@ -49,5 +102,59 @@ int Leveling::SubLevel::read_from_file(const std::string& path) {
 			break;
 		}
 	}
+	in.close();
+	return 0;
+}
+
+
+
+Leveling::Level::Level(int number, int k) : number(number), k(k) {
+	generate();
+	for (int i = 1; i != k + 1; ++i) {
+		sublevels.push_back({i, number});
+	}
+}
+
+int Leveling::Level::start(sf::RenderWindow& window) {
+	int n = sublevels[0].start(window);
+	while (n != -1) {
+		if (n == 0) {
+			restart();
+			n = sublevels[0].start(window);
+		}
+		else if (n <= k && n > 0) {
+			n = sublevels[n - 1].start(window);
+		}
+		else {
+			break;
+		}
+	}
+	return 0;
+}
+
+int Leveling::Level::generate() const {
+	for (int i = 0; i != k; ++i) {
+		std::ifstream in(generate_path(generate_sublevel_original_name(number, i+1)));
+		std::ofstream out(generate_path(generate_sublevel_name(number, i + 1)));
+		char buffer[100];
+		bool flag = false;
+		while (!in.eof()) {
+			if (flag) {
+				out << '\n';
+			}
+			else {
+				flag = true;
+			}
+			in.getline(buffer, sizeof(buffer));
+			out << buffer;
+		}
+		in.close();
+		out.close();
+	}
+	return 0;
+}
+
+int Leveling::Level::restart() const {
+	generate();
 	return 0;
 }
