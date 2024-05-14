@@ -8,7 +8,7 @@ Shapes::Obj::Obj(const Obj& obj) : position(obj.position), size(obj.size), harmf
 	sprite.setTextureRect(sf::IntRect(0, 0, (int)size.x, (int)size.y));
 	sprite.setPosition(position);
 	if (passable) { // прозрачность спрайта
-		sprite.setColor(sf::Color(255, 255, 255, 5));
+		sprite.setColor(sf::Color(255, 255, 255, 1055));
 	}
 }
 
@@ -20,7 +20,7 @@ Shapes::Obj::Obj(const std::string& name, const sf::Vector2f& position, const sf
 	sprite.setTextureRect(sf::IntRect(0, 0, (int)size.x, (int)size.y)); // Даем текстуре форму
 	sprite.setPosition(position);
 	if (passable) { // прозрачность спрайта
-		sprite.setColor(sf::Color(255, 255, 255, 5));
+		sprite.setColor(sf::Color(255, 255, 255, 105));
 	}
 }
 

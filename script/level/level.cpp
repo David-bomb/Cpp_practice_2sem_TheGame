@@ -146,11 +146,17 @@ Leveling::Level::Level(int number, int k) : number(number), k(k) {
 }
 
 int Leveling::Level::start(sf::RenderWindow& window) {
+	sf::Music music; 
+	if (!music.openFromFile((Leveling::generate_sound_path("GPmusic.wav"))))
+		std::cout << "ERROR IN: " << Leveling::generate_sound_path("GPmusic.wav") << std::endl;
+	music.play();
+	music.setVolume(38);
+	music.setLoop(true);
 	int n = sublevels[0].start(window);
 	std::cout << n << std::endl;
-	sf::SoundBuffer deather; // Смерть
+	sf::SoundBuffer deather;
 	sf::Sound death;
-	sf::SoundBuffer passing; // Смерть
+	sf::SoundBuffer passing;
 	sf::Sound pass;
 	if (!deather.loadFromFile(Leveling::generate_sound_path("death.wav"))) {
 		std::cout << "ERROR IN: " << Leveling::generate_sound_path("death.wav") << std::endl;
@@ -160,21 +166,18 @@ int Leveling::Level::start(sf::RenderWindow& window) {
 	}
 	death.setBuffer(deather);
 	pass.setBuffer(passing);
-
 	while (n != -1) {
-		if (n == 0) { // ERROR: Мы, минуя n = 1, попадаем на n = 2. 
-			std::cout << n << std::endl;
+		if (n == 0) { // Персонаж погиб
+			death.play();
 			restart();
 			n = sublevels[0].start(window);
-			death.play();
 		}
-		else if (n <= k && n > 0) {
-			std::cout << n << std::endl;
+		else if (n <= k && n > 0) { // Персонаж перешел в другой подуровень
+
 			pass.play();
 			n = sublevels[n - 1].start(window);
 		}
 		else {
-			std::cout << n << std::endl;
 			break;
 		}
 	}
