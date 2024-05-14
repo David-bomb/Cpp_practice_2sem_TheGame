@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -8,6 +9,7 @@
 
 namespace Leveling {
 	std::string generate_path(const std::string&);
+	std::string generate_sound_path(const std::string& name);
 }
 
 namespace Shapes {
@@ -36,5 +38,28 @@ namespace Shapes {
 		float down_boarder() const;
 		bool is_passable() const;
 		bool is_harmful() const;
+	};
+}
+
+namespace Audio {
+	class Sounds {
+		sf::SoundBuffer buffer;
+		sf::Sound sound;
+	public:
+		Sounds(const std::string& filename); // создаем объект звука по имени
+		Sounds(); // пустышка
+		int play(); // проиграть звук
+		int setVolume(int volume); // установить громкость
+		int setLoop(bool looped); // зациклить
+	};
+
+	class Music {
+		sf::Music music;
+	public:
+		Music(const std::string& filename); // создаем объект музыки по имени
+		Music(); // пустышка
+		int play(); // проиграть музыку
+		int setVolume(int volume); // установить громкость
+		int setLoop(bool looped); // зациклить
 	};
 }

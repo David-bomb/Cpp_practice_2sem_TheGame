@@ -154,6 +154,7 @@ Moving::Player::Player(const std::string& path, const sf::Vector2f& position, fl
 
 int Moving::Player::move_on(float time, int dir, const std::vector<Shapes::Obj>& arr, std::vector<Movable>& movables) {
 	float new_x = position.x + PLAYER_SPEED * time * dir;
+	//std::cout << "GO\n";
 	if (dir > 0) { // вправо
 		for (int i = 0; i != arr.size(); ++i) { // не встречается с объектами
 			if (((arr[i].up_boarder() <= up_boarder() && down_boarder() <= arr[i].down_boarder()) || (up_boarder() <= arr[i].up_boarder() && arr[i].up_boarder() < down_boarder()) || (up_boarder() < arr[i].down_boarder() && arr[i].down_boarder() <= down_boarder()) || (up_boarder() <= arr[i].up_boarder() && arr[i].down_boarder() <= down_boarder())) && new_x < arr[i].left_boarder() && arr[i].left_boarder() < new_x + size.x) {
@@ -168,6 +169,7 @@ int Moving::Player::move_on(float time, int dir, const std::vector<Shapes::Obj>&
 					}
 				}
 				else {
+					
 					if (arr[i].is_harmful()) {
 						return 1;
 					}
@@ -199,6 +201,7 @@ int Moving::Player::move_on(float time, int dir, const std::vector<Shapes::Obj>&
 					}
 				}
 				else {
+					
 					if (arr[i].is_harmful()) {
 						return 1;
 					}
@@ -288,11 +291,13 @@ int Moving::Player::move_vertical(float time, const std::vector<Shapes::Obj>& ar
 	return 0;
 }
 
-int Moving::Player::update(float time, const std::vector<Shapes::Obj>& arr, std::vector<Movable>& movables) {
+int Moving::Player::update(float time, const std::vector<Shapes::Obj>& arr, std::vector<Movable>& movables, Audio::Sounds& sound) {
+
 	if (((int)(sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) + (int)(sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))) % 2 == 0) {
 		state = State::Stand;
 	}
 	else {
+		sound.play();
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 			state = State::Left;
 			switch (move_on(time, -1, arr, movables)) { // двигаем влево
@@ -340,9 +345,10 @@ int Moving::Player::update(float time, const std::vector<Shapes::Obj>& arr, std:
 	return 0;
 }
 
-int Moving::Player::jump(const std::vector<Shapes::Obj>& arr, const std::vector<Movable>& movables) {
+int Moving::Player::jump(const std::vector<Shapes::Obj>& arr, const std::vector<Movable>& movables, Audio::Sounds& jump) {
 	if (!is_levitating(arr, movables)) {
 		y_speed = PLAYER_JUMP_SPEED;
+		jump.play();
 	}
 	return 0;
 }

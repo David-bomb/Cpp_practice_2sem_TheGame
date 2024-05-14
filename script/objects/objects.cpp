@@ -8,7 +8,7 @@ Shapes::Obj::Obj(const Obj& obj) : position(obj.position), size(obj.size), harmf
 	sprite.setTextureRect(sf::IntRect(0, 0, (int)size.x, (int)size.y));
 	sprite.setPosition(position);
 	if (passable) { // прозрачность спрайта
-		sprite.setColor(sf::Color(255, 255, 255, 5));
+		sprite.setColor(sf::Color(255, 255, 255, 1055));
 	}
 }
 
@@ -20,7 +20,7 @@ Shapes::Obj::Obj(const std::string& name, const sf::Vector2f& position, const sf
 	sprite.setTextureRect(sf::IntRect(0, 0, (int)size.x, (int)size.y)); // Даем текстуре форму
 	sprite.setPosition(position);
 	if (passable) { // прозрачность спрайта
-		sprite.setColor(sf::Color(255, 255, 255, 5));
+		sprite.setColor(sf::Color(255, 255, 255, 105));
 	}
 }
 
@@ -60,4 +60,55 @@ bool Shapes::Obj::is_passable() const {
 
 bool Shapes::Obj::is_harmful() const {
 	return harmful;
+}
+
+
+Audio::Sounds::Sounds(const std::string& filename) {
+	if (!buffer.loadFromFile(Leveling::generate_sound_path(filename))) {
+		std::cout << "ERROR IN: " << Leveling::generate_sound_path(filename) << std::endl;
+	}
+	sound.setBuffer(buffer);
+}
+
+Audio::Sounds::Sounds() {
+	sound.setBuffer(buffer);
+}
+
+int Audio::Sounds::play() {
+	sound.play();
+	return 0;
+}
+
+int Audio::Sounds::setVolume(int volume) {
+	sound.setVolume(volume);
+	return 0;
+}
+
+int Audio::Sounds::setLoop(bool looped) {
+	sound.setLoop(looped);
+	return 0;
+}
+
+Audio::Music::Music(const std::string& filename) {
+	if (!music.openFromFile((Leveling::generate_sound_path("GPmusic.wav"))))
+		std::cout << "ERROR IN: " << Leveling::generate_sound_path("GPmusic.wav") << std::endl;
+}
+
+Audio::Music::Music() {
+	;
+}
+
+int Audio::Music::play() {
+	music.play();
+	return 0;
+}
+
+int Audio::Music::setVolume(int volume) {
+	music.setVolume(volume);
+	return 0;
+}
+
+int Audio::Music::setLoop(bool looped) {
+	music.setLoop(looped);
+	return 0;
 }

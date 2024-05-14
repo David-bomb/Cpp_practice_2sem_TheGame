@@ -12,13 +12,23 @@ std::string Leveling::generate_sublevel_original_name(int number, int n) {
 	return "levels/" + std::to_string(number) + '-' + std::to_string(n) + "-original.txt";
 }
 
+std::string Leveling::generate_sound_path(const std::string& name) {
+	return generate_path("sounds") + "/" + name;
+}
+
 
 
 Leveling::SubLevel::SubLevel(int n, int number) : n(n), number(number) { ; }
 
 int Leveling::SubLevel::start(sf::RenderWindow& window) {
+	// Может быть сделаю отдельный класс для звуков, а то проделывание одних и тех же действий - плохое решение.
+	Audio::Sounds empty; // пустышка
+	Audio::Sounds step("step.wav");
+	Audio::Sounds jump("jump.wav");
 	read_from_file(generate_path(generate_sublevel_name(number, n)));
 	sf::Clock clock;
+	double a = 0;
+	int result;
 	while (window.isOpen()) {
 		double time = clock.getElapsedTime().asMicroseconds();
 		clock.restart();
@@ -31,14 +41,21 @@ int Leveling::SubLevel::start(sf::RenderWindow& window) {
 			}
 			if (event.type == sf::Event::KeyPressed) {
 				if (event.key.scancode == sf::Keyboard::Scan::W || event.key.scancode == sf::Keyboard::Scan::Up) {
-					player.jump(objects, movables);
+					player.jump(objects, movables, jump);
 				}
 			}
 		}
 		for (int i = 0; i != movables.size(); ++i) {
 			movables[i].update(time, objects, movables);
 		}
-		int result = player.update(time, objects, movables);
+		a += 0.01; // Может можно как-то связать со временем, посмотрим
+		if (a >= 1){ // таким образом мы задаем частоту шагов. чем выше предел a, тем реже шаги
+			result = player.update(time, objects, movables, step);
+			a = 0;
+		}
+		else {
+			result = player.update(time, objects, movables, empty);
+		}
 		if (!player.is_alive()) {
 			return 0;
 		}
@@ -47,6 +64,7 @@ int Leveling::SubLevel::start(sf::RenderWindow& window) {
 		}
 		update_window(window);
 	}
+
 }
 
 int Leveling::SubLevel::update_window(sf::RenderWindow& window) {
@@ -116,13 +134,22 @@ Leveling::Level::Level(int number, int k) : number(number), k(k) {
 }
 
 int Leveling::Level::start(sf::RenderWindow& window) {
+	Audio::Music music("GPmusic.wav");
+	music.play();
+	music.setVolume(38);
+	music.setLoop(true);
 	int n = sublevels[0].start(window);
+	Audio::Sounds death("death.wav");
+	Audio::Sounds pass("passing.wav");
 	while (n != -1) {
-		if (n == 0) {
+		if (n == 0) { // Персонаж погиб
+			death.play();
 			restart();
 			n = sublevels[0].start(window);
 		}
-		else if (n <= k && n > 0) {
+		else if (n <= k && n > 0) { // Персонаж перешел в другой подуровень
+
+			pass.play();
 			n = sublevels[n - 1].start(window);
 		}
 		else {
