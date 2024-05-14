@@ -40,8 +40,8 @@ namespace Moving {
 		Player();
 		Player(const Player&);
 		Player(const std::string&, const sf::Vector2f&, float = 1);  // конструктор
-		int update(float, const std::vector<Shapes::Obj>&, std::vector<Movable>&, sf::Sound&); // обновление игрока
-		int jump(const std::vector<Shapes::Obj>&, const std::vector<Movable>&, sf::Sound&); // прыжок
+		int update(float, const std::vector<Shapes::Obj>&, std::vector<Movable>&, Audio::Sounds&); // обновление игрока
+		int jump(const std::vector<Shapes::Obj>&, const std::vector<Movable>&, Audio::Sounds&); // прыжок
 		bool is_alive() const; // жив ли персонаж
 		Player& operator =(const Player&);
 	};

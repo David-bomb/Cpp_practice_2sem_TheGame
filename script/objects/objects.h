@@ -40,3 +40,26 @@ namespace Shapes {
 		bool is_harmful() const;
 	};
 }
+
+namespace Audio {
+	class Sounds {
+		sf::SoundBuffer buffer;
+		sf::Sound sound;
+	public:
+		Sounds(const std::string& filename); // создаем объект звука по имени
+		Sounds(); // пустышка
+		int play(); // проиграть звук
+		int setVolume(int volume); // установить громкость
+		int setLoop(bool looped); // зациклить
+	};
+
+	class Music {
+		sf::Music music;
+	public:
+		Music(const std::string& filename); // создаем объект музыки по имени
+		Music(); // пустышка
+		int play(); // проиграть музыку
+		int setVolume(int volume); // установить громкость
+		int setLoop(bool looped); // зациклить
+	};
+}

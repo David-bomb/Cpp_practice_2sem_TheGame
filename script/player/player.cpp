@@ -291,7 +291,7 @@ int Moving::Player::move_vertical(float time, const std::vector<Shapes::Obj>& ar
 	return 0;
 }
 
-int Moving::Player::update(float time, const std::vector<Shapes::Obj>& arr, std::vector<Movable>& movables,  sf::Sound& sound) {
+int Moving::Player::update(float time, const std::vector<Shapes::Obj>& arr, std::vector<Movable>& movables, Audio::Sounds& sound) {
 
 	if (((int)(sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) + (int)(sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))) % 2 == 0) {
 		state = State::Stand;
@@ -345,7 +345,7 @@ int Moving::Player::update(float time, const std::vector<Shapes::Obj>& arr, std:
 	return 0;
 }
 
-int Moving::Player::jump(const std::vector<Shapes::Obj>& arr, const std::vector<Movable>& movables, sf::Sound& jump) {
+int Moving::Player::jump(const std::vector<Shapes::Obj>& arr, const std::vector<Movable>& movables, Audio::Sounds& jump) {
 	if (!is_levitating(arr, movables)) {
 		y_speed = PLAYER_JUMP_SPEED;
 		jump.play();

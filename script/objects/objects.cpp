@@ -61,3 +61,54 @@ bool Shapes::Obj::is_passable() const {
 bool Shapes::Obj::is_harmful() const {
 	return harmful;
 }
+
+
+Audio::Sounds::Sounds(const std::string& filename) {
+	if (!buffer.loadFromFile(Leveling::generate_sound_path(filename))) {
+		std::cout << "ERROR IN: " << Leveling::generate_sound_path(filename) << std::endl;
+	}
+	sound.setBuffer(buffer);
+}
+
+Audio::Sounds::Sounds() {
+	sound.setBuffer(buffer);
+}
+
+int Audio::Sounds::play() {
+	sound.play();
+	return 0;
+}
+
+int Audio::Sounds::setVolume(int volume) {
+	sound.setVolume(volume);
+	return 0;
+}
+
+int Audio::Sounds::setLoop(bool looped) {
+	sound.setLoop(looped);
+	return 0;
+}
+
+Audio::Music::Music(const std::string& filename) {
+	if (!music.openFromFile((Leveling::generate_sound_path("GPmusic.wav"))))
+		std::cout << "ERROR IN: " << Leveling::generate_sound_path("GPmusic.wav") << std::endl;
+}
+
+Audio::Music::Music() {
+	;
+}
+
+int Audio::Music::play() {
+	music.play();
+	return 0;
+}
+
+int Audio::Music::setVolume(int volume) {
+	music.setVolume(volume);
+	return 0;
+}
+
+int Audio::Music::setLoop(bool looped) {
+	music.setLoop(looped);
+	return 0;
+}

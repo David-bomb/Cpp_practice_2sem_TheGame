@@ -22,21 +22,9 @@ Leveling::SubLevel::SubLevel(int n, int number) : n(n), number(number) { ; }
 
 int Leveling::SubLevel::start(sf::RenderWindow& window) {
 	// Может быть сделаю отдельный класс для звуков, а то проделывание одних и тех же действий - плохое решение.
-	sf::SoundBuffer steper; //шаг
-	sf::SoundBuffer empty; // пустышка
-	sf::SoundBuffer jumper; // прыжок
-	if (!steper.loadFromFile(Leveling::generate_sound_path("step.wav"))) {
-		std::cout << "ERROR IN: " << Leveling::generate_sound_path("step.wav") << std::endl;
-	}
-	if (!jumper.loadFromFile(Leveling::generate_sound_path("jump.wav"))) {
-		std::cout << "ERROR IN: " << Leveling::generate_sound_path("jump.wav") << std::endl;
-	}
-	sf::Sound step;
-	sf::Sound emp;
-	sf::Sound jump;
-	jump.setBuffer(jumper);
-	emp.setBuffer(empty);
-	step.setBuffer(steper);
+	Audio::Sounds empty; // пустышка
+	Audio::Sounds step("step.wav");
+	Audio::Sounds jump("jump.wav");
 	read_from_file(generate_path(generate_sublevel_name(number, n)));
 	sf::Clock clock;
 	double a = 0;
@@ -66,7 +54,7 @@ int Leveling::SubLevel::start(sf::RenderWindow& window) {
 			a = 0;
 		}
 		else {
-			result = player.update(time, objects, movables, emp);
+			result = player.update(time, objects, movables, empty);
 		}
 		if (!player.is_alive()) {
 			return 0;
@@ -146,26 +134,13 @@ Leveling::Level::Level(int number, int k) : number(number), k(k) {
 }
 
 int Leveling::Level::start(sf::RenderWindow& window) {
-	sf::Music music; 
-	if (!music.openFromFile((Leveling::generate_sound_path("GPmusic.wav"))))
-		std::cout << "ERROR IN: " << Leveling::generate_sound_path("GPmusic.wav") << std::endl;
+	Audio::Music music("GPmusic.wav");
 	music.play();
 	music.setVolume(38);
 	music.setLoop(true);
 	int n = sublevels[0].start(window);
-	std::cout << n << std::endl;
-	sf::SoundBuffer deather;
-	sf::Sound death;
-	sf::SoundBuffer passing;
-	sf::Sound pass;
-	if (!deather.loadFromFile(Leveling::generate_sound_path("death.wav"))) {
-		std::cout << "ERROR IN: " << Leveling::generate_sound_path("death.wav") << std::endl;
-	}
-	if (!passing.loadFromFile(Leveling::generate_sound_path("passing.wav"))) {
-		std::cout << "ERROR IN: " << Leveling::generate_sound_path("passing.wav") << std::endl;
-	}
-	death.setBuffer(deather);
-	pass.setBuffer(passing);
+	Audio::Sounds death("death.wav");
+	Audio::Sounds pass("passing.wav");
 	while (n != -1) {
 		if (n == 0) { // Персонаж погиб
 			death.play();

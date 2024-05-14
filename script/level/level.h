@@ -13,7 +13,6 @@ namespace Leveling {
 		int number; // номер уровня
 		int n; // номер подуровня
 		int read_from_file(const std::string&); // считать подуровень из файла
-		int write_to_file(const std::string&); // записать подуровень в файл (мертвая функция, можно удалить)
 		int update_window(sf::RenderWindow&);
 	public:
 		SubLevel(int, int);
