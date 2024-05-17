@@ -27,8 +27,6 @@ namespace Leveling {
 	public:
 		Level(int, int);
 		int start(sf::RenderWindow&); // запуск уровня
-		int generate() const; // генерация
-		int restart() const; // перезапуск
 	};
 
 
