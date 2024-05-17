@@ -4,9 +4,6 @@ std::string Leveling::generate_path(const std::string& name) {
 	return "../../../../../sources/" + name;
 }
 
-std::string Leveling::generate_sublevel_name(int number, int n) {
-	return "levels/" + std::to_string(number) + '-' + std::to_string(n) + ".txt";
-}
 
 std::string Leveling::generate_sublevel_original_name(int number, int n) {
 	return "levels/" + std::to_string(number) + '-' + std::to_string(n) + "-original.txt";
@@ -21,11 +18,10 @@ std::string Leveling::generate_sound_path(const std::string& name) {
 Leveling::SubLevel::SubLevel(int n, int number) : n(n), number(number) { ; }
 
 int Leveling::SubLevel::start(sf::RenderWindow& window) {
-	// ћожет быть сделаю отдельный класс дл€ звуков, а то проделывание одних и тех же действий - плохое решение.
 	Audio::Sounds empty; // пустышка
 	Audio::Sounds step("step.wav");
 	Audio::Sounds jump("jump.wav");
-	read_from_file(generate_path(generate_sublevel_name(number, n)));
+	read_from_file(generate_path(generate_sublevel_original_name(number, n)));
 	sf::Clock clock;
 	double a = 0;
 	int result;
@@ -127,7 +123,6 @@ int Leveling::SubLevel::read_from_file(const std::string& path) {
 
 
 Leveling::Level::Level(int number, int k) : number(number), k(k) {
-	generate();
 	for (int i = 1; i != k + 1; ++i) {
 		sublevels.push_back({i, number});
 	}
@@ -144,7 +139,6 @@ int Leveling::Level::start(sf::RenderWindow& window) {
 	while (n != -1) {
 		if (n == 0) { // ѕерсонаж погиб
 			death.play();
-			restart();
 			n = sublevels[0].start(window);
 		}
 		else if (n <= k && n > 0) { // ѕерсонаж перешел в другой подуровень
@@ -156,32 +150,5 @@ int Leveling::Level::start(sf::RenderWindow& window) {
 			break;
 		}
 	}
-	return 0;
-}
-
-int Leveling::Level::generate() const {
-	for (int i = 0; i != k; ++i) {
-		std::ifstream in(generate_path(generate_sublevel_original_name(number, i+1)));
-		std::ofstream out(generate_path(generate_sublevel_name(number, i + 1)));
-		char buffer[100];
-		bool flag = false;
-		while (!in.eof()) {
-			if (flag) {
-				out << '\n';
-			}
-			else {
-				flag = true;
-			}
-			in.getline(buffer, sizeof(buffer));
-			out << buffer;
-		}
-		in.close();
-		out.close();
-	}
-	return 0;
-}
-
-int Leveling::Level::restart() const {
-	generate();
 	return 0;
 }
