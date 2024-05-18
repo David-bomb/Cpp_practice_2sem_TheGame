@@ -7,9 +7,9 @@ Shapes::Obj::Obj(const Obj& obj) : position(obj.position), size(obj.size), harmf
 	sprite.setTexture(texture);
 	sprite.setTextureRect(sf::IntRect(0, 0, (int)size.x, (int)size.y));
 	sprite.setPosition(position);
-	if (passable) { // прозрачность спрайта
-		sprite.setColor(sf::Color(255, 255, 255, 1055));
-	}
+	//if (passable) { // прозрачность спрайта
+	//	sprite.setColor(sf::Color(255, 255, 255, 1055));
+	//}
 }
 
 Shapes::Obj::Obj(const std::string& name, const sf::Vector2f& position, const sf::Vector2f& size, bool harmful, bool passable) : position(position), size(size), harmful(harmful), passable(passable), created(true) {
@@ -19,9 +19,9 @@ Shapes::Obj::Obj(const std::string& name, const sf::Vector2f& position, const sf
 	sprite.setTexture(texture);
 	sprite.setTextureRect(sf::IntRect(0, 0, (int)size.x, (int)size.y)); // Даем текстуре форму
 	sprite.setPosition(position);
-	if (passable) { // прозрачность спрайта
-		sprite.setColor(sf::Color(255, 255, 255, 105));
-	}
+	//if (passable) { // прозрачность спрайта
+	//	sprite.setColor(sf::Color(255, 255, 255, 105));
+	//}
 }
 
 void Shapes::Obj::draw(sf::RenderWindow& window) const {
