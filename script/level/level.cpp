@@ -23,8 +23,9 @@ int Leveling::SubLevel::start(sf::RenderWindow& window) {
 	Audio::Sounds jump("jump.wav");
 	read_from_file(generate_path(generate_sublevel_original_name(number, n)));
 	sf::Clock clock;
-	double a = 0;
+	double a = 0; // ﬂ–À€ 
 	int result;
+	Shapes::Obj BG("bg.png", sf::Vector2f(0, 0), sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT), 0, 1);
 	while (window.isOpen()) {
 		double time = clock.getElapsedTime().asMicroseconds();
 		clock.restart();
@@ -58,13 +59,14 @@ int Leveling::SubLevel::start(sf::RenderWindow& window) {
 		if (result != 0) {
 			return n + result;
 		}
-		update_window(window);
+		update_window(window, BG);
 	}
 
 }
 
-int Leveling::SubLevel::update_window(sf::RenderWindow& window) {
+int Leveling::SubLevel::update_window(sf::RenderWindow& window, Shapes::Obj& BG) {
 	window.clear();
+	BG.draw(window);
 	player.draw(window);
 	for (int i = 0; i != movables.size(); ++i) {
 		movables[i].draw(window);
