@@ -7,21 +7,15 @@ Shapes::Obj::Obj(const Obj& obj) : position(obj.position), size(obj.size), harmf
 	sprite.setTexture(texture);
 	sprite.setTextureRect(sf::IntRect(0, 0, (int)size.x, (int)size.y));
 	sprite.setPosition(position);
-	//if (passable) { // прозрачность спрайта
-	//	sprite.setColor(sf::Color(255, 255, 255, 1055));
-	//}
 }
 
 Shapes::Obj::Obj(const std::string& name, const sf::Vector2f& position, const sf::Vector2f& size, bool harmful, bool passable) : position(position), size(size), harmful(harmful), passable(passable), created(true) {
 	if (!texture.loadFromFile(Leveling::generate_path(name))) { // Проверка на успешность загрузки текстуры. 
-		std::cout << "Image loading failed.\n";
+		std::cout << name << ": Image loading failed.\n";
 	}
 	sprite.setTexture(texture);
 	sprite.setTextureRect(sf::IntRect(0, 0, (int)size.x, (int)size.y)); // Даем текстуре форму
 	sprite.setPosition(position);
-	//if (passable) { // прозрачность спрайта
-	//	sprite.setColor(sf::Color(255, 255, 255, 105));
-	//}
 }
 
 void Shapes::Obj::draw(sf::RenderWindow& window) const {
@@ -65,7 +59,7 @@ bool Shapes::Obj::is_harmful() const {
 
 Audio::Sounds::Sounds(const std::string& filename) {
 	if (!buffer.loadFromFile(Leveling::generate_sound_path(filename))) {
-		std::cout << "ERROR IN: " << Leveling::generate_sound_path(filename) << std::endl;
+		std::cout << "Sound not found: " << Leveling::generate_sound_path(filename) << std::endl;
 	}
 	sound.setBuffer(buffer);
 }
@@ -91,7 +85,7 @@ int Audio::Sounds::setLoop(bool looped) {
 
 Audio::Music::Music(const std::string& filename) {
 	if (!music.openFromFile((Leveling::generate_sound_path("GPmusic.wav"))))
-		std::cout << "ERROR IN: " << Leveling::generate_sound_path("GPmusic.wav") << std::endl;
+		std::cout << "Music not found: " << Leveling::generate_sound_path("GPmusic.wav") << std::endl;
 }
 
 Audio::Music::Music() {

@@ -13,7 +13,7 @@ namespace Leveling {
 		int number; // номер уровня
 		int n; // номер подуровня
 		int read_from_file(const std::string&); // считать подуровень из файла
-		int update_window(sf::RenderWindow&);
+		int update_window(sf::RenderWindow&, Shapes::Obj&);
 	public:
 		SubLevel(int, int);
 		int start(sf::RenderWindow&); // запуск подуровня
@@ -32,7 +32,6 @@ namespace Leveling {
 
 
 	std::string generate_path(const std::string&);
-	std::string generate_sublevel_name(int, int);
 	std::string generate_sublevel_original_name(int, int);
 	std::string generate_sound_path(const std::string&);
 }
