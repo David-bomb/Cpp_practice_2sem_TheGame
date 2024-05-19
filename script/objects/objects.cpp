@@ -112,3 +112,8 @@ int Audio::Music::setLoop(bool looped) {
 	music.setLoop(looped);
 	return 0;
 }
+
+int Audio::Music::stop() {
+	music.stop();
+	return 0;
+}

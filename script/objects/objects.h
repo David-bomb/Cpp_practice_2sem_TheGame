@@ -61,5 +61,6 @@ namespace Audio {
 		int play(); // проиграть музыку
 		int setVolume(int volume); // установить громкость
 		int setLoop(bool looped); // зациклить
+		int stop(); // Остановка музыки
 	};
 }
