@@ -18,12 +18,12 @@ std::string Leveling::generate_sound_path(const std::string& name) {
 Leveling::SubLevel::SubLevel(int n, int number) : n(n), number(number) { ; }
 
 int Leveling::SubLevel::start(sf::RenderWindow& window) {
-	Audio::Sounds empty; // пустышка
+	Audio::Sounds empty; // ГЇГіГ±ГІГ»ГёГЄГ 
 	Audio::Sounds step("step.wav");
 	Audio::Sounds jump("jump.wav");
 	read_from_file(generate_path(generate_sublevel_original_name(number, n)));
 	sf::Clock clock;
-	double a = 0; // ЯРЛЫК
+	double a = 0; // ГџГђГ‹Г›ГЉ
 	int result;
 	Shapes::Obj BG("bg.png", sf::Vector2f(0, 0), sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT), 0, 1);
 	while (window.isOpen()) {
@@ -45,8 +45,8 @@ int Leveling::SubLevel::start(sf::RenderWindow& window) {
 		for (int i = 0; i != movables.size(); ++i) {
 			movables[i].update(time, objects, movables);
 		}
-		a += 0.01; // Может можно как-то связать со временем, посмотрим
-		if (a >= 1){ // таким образом мы задаем частоту шагов. чем выше предел a, тем реже шаги
+		a += 0.01; // ГЊГ®Г¦ГҐГІ Г¬Г®Г¦Г­Г® ГЄГ ГЄ-ГІГ® Г±ГўГїГ§Г ГІГј Г±Г® ГўГ°ГҐГ¬ГҐГ­ГҐГ¬, ГЇГ®Г±Г¬Г®ГІГ°ГЁГ¬
+		if (a >= 1){ // ГІГ ГЄГЁГ¬ Г®ГЎГ°Г Г§Г®Г¬ Г¬Г» Г§Г Г¤Г ГҐГ¬ Г·Г Г±ГІГ®ГІГі ГёГ ГЈГ®Гў. Г·ГҐГ¬ ГўГ»ГёГҐ ГЇГ°ГҐГ¤ГҐГ« a, ГІГҐГ¬ Г°ГҐГ¦ГҐ ГёГ ГЈГЁ
 			result = player.update(time, objects, movables, step);
 			a = 0;
 		}
@@ -104,7 +104,7 @@ int Leveling::SubLevel::read_from_file(const std::string& path) {
 		switch (obj) {
 		case Objects::Player:
 			in >> _pos.x >> _pos.y;
-			player = { "player.png", _pos};
+			player = { "player2.png", _pos};
 			break;
 		case Objects::Obj:
 			in >> _name >> _pos.x >> _pos.y >> _size.x >> _size.y >> _harmful >> _passable;
@@ -139,11 +139,11 @@ int Leveling::Level::start(sf::RenderWindow& window) {
 	Audio::Sounds death("death.wav");
 	Audio::Sounds pass("passing.wav");
 	while (n != -1) {
-		if (n == 0) { // Персонаж погиб
+		if (n == 0) { // ГЏГҐГ°Г±Г®Г­Г Г¦ ГЇГ®ГЈГЁГЎ
 			death.play();
 			n = sublevels[0].start(window);
 		}
-		else if (n <= k && n > 0) { // Персонаж перешел в другой подуровень
+		else if (n <= k && n > 0) { // ГЏГҐГ°Г±Г®Г­Г Г¦ ГЇГҐГ°ГҐГёГҐГ« Гў Г¤Г°ГіГЈГ®Г© ГЇГ®Г¤ГіГ°Г®ГўГҐГ­Гј
 
 			pass.play();
 			n = sublevels[n - 1].start(window);
