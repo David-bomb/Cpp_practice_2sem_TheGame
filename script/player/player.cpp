@@ -4,6 +4,7 @@ Moving::Movable::Movable() : y_speed(0), position(0, 0), size(0, 0), mass(0) { ;
 
 Moving::Movable::Movable(const Movable& mov) : y_speed(0), position(mov.position), size(mov.size), mass(mov.mass) {
 	texture.loadFromImage(mov.texture.copyToImage());
+	texture.setRepeated(true);
 	sprite.setTexture(texture);
 	sprite.setPosition(position);
 	sprite.setTextureRect({ 0, 0, (int)size.x, (int)size.y });
@@ -13,6 +14,7 @@ Moving::Movable::Movable(const std::string& path, const sf::Vector2f& position, 
 	if (!texture.loadFromFile(Leveling::generate_path(path))) {
 		std::cout << "Texture loading failed.\n";
 	}
+	texture.setRepeated(true);
 	sprite.setTexture(texture);
 	sprite.setPosition(position);
 	sprite.setTextureRect({ 0, 0, (int)size.x, (int)size.y });
@@ -23,11 +25,11 @@ int Moving::Movable::draw(sf::RenderWindow& window) const {
 	return 0;
 }
 
-int Moving::Movable::update(float time, const std::vector<Shapes::Obj>& arr, const std::vector<Movable>& movables) {
+int Moving::Movable::update(float time, const std::vector<Shapes::Obj>& arr, const std::vector<Movable>& movables, const Player& player) {
 	if (is_levitating(arr, movables)) { // гравитация
 		y_speed -= G * time * mass;
 	}
-	move_vertical(time, arr, movables);
+	move_vertical(time, arr, movables, player);
 	return 0;
 }
 
@@ -78,7 +80,7 @@ int Moving::Movable::move_on(float length, const std::vector<Shapes::Obj>& arr, 
 	return 0;
 }
 
-int Moving::Movable::move_vertical(float time, const std::vector<Shapes::Obj>& arr, const std::vector<Movable>& movables) {
+int Moving::Movable::move_vertical(float time, const std::vector<Shapes::Obj>& arr, const std::vector<Movable>& movables, const Player& player) {
 	float new_y = position.y - y_speed * time;
 	if (y_speed > 0) { // вверх
 		for (int i = 0; i != arr.size(); ++i) { // не встречается с объектами
@@ -100,6 +102,10 @@ int Moving::Movable::move_vertical(float time, const std::vector<Shapes::Obj>& a
 				}
 			}
 		}
+		if (((player.left_boarder() <= left_boarder() && right_boarder() <= player.right_boarder()) || (left_boarder() <= player.left_boarder() && player.left_boarder() < right_boarder()) || (left_boarder() < player.right_boarder() && player.right_boarder() <= right_boarder()) || (left_boarder() <= player.left_boarder() && player.right_boarder() <= right_boarder())) && player.down_boarder() > new_y && player.down_boarder() < new_y + size.y) {
+			y_speed = 0;
+			new_y = player.down_boarder();
+		}
 	}
 	else if (y_speed < 0) { // вниз
 		for (int i = 0; i != arr.size(); ++i) { // не встречается с объектами
@@ -120,6 +126,10 @@ int Moving::Movable::move_vertical(float time, const std::vector<Shapes::Obj>& a
 					new_y = movables[i].up_boarder() - size.y;
 				}
 			}
+		}
+		if (((player.left_boarder() <= left_boarder() && right_boarder() <= player.right_boarder()) || (left_boarder() <= player.left_boarder() && player.left_boarder() < right_boarder()) || (left_boarder() < player.right_boarder() && player.right_boarder() <= right_boarder()) || (left_boarder() <= player.left_boarder() && player.right_boarder() <= right_boarder())) && player.up_boarder() < new_y + size.y && player.up_boarder() > new_y) {
+			y_speed = 0;
+			new_y = player.up_boarder() - size.y;
 		}
 	}
 	sprite.move({ 0, new_y - position.y });
@@ -384,6 +394,7 @@ Moving::Player& Moving::Player::operator=(const Player& p) {
 	alive = p.alive;
 	state = State::Stand;
 	texture.loadFromImage(p.texture.copyToImage());
+	texture.setRepeated(true);
 	sprite.setTexture(texture);
 	sprite.setPosition(position);
 	sprite.setTextureRect({ 0, 0, (int)size.x, (int)size.y });

@@ -4,6 +4,7 @@ Shapes::Obj::Obj() : position(0, 0), size(0, 0), harmful(false), passable(false)
 
 Shapes::Obj::Obj(const Obj& obj) : position(obj.position), size(obj.size), harmful(obj.harmful), passable(obj.passable), created(obj.created) {
 	texture.loadFromImage(obj.texture.copyToImage());
+	texture.setRepeated(true);
 	sprite.setTexture(texture);
 	sprite.setTextureRect(sf::IntRect(0, 0, (int)size.x, (int)size.y));
 	sprite.setPosition(position);
@@ -13,6 +14,7 @@ Shapes::Obj::Obj(const std::string& name, const sf::Vector2f& position, const sf
 	if (!texture.loadFromFile(Leveling::generate_path(name))) { // Проверка на успешность загрузки текстуры. 
 		std::cout << name << ": Image loading failed.\n";
 	}
+	texture.setRepeated(true);
 	sprite.setTexture(texture);
 	sprite.setTextureRect(sf::IntRect(0, 0, (int)size.x, (int)size.y)); // Даем текстуре форму
 	sprite.setPosition(position);

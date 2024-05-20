@@ -4,6 +4,7 @@
 
 namespace Moving {
 	enum class State{Stand, Left, Right, Up, Down};
+	class Player;
 
 	class Movable { // класс двигающегося объекта
 	protected:
@@ -13,14 +14,14 @@ namespace Moving {
 		sf::Vector2f size; // размер
 		sf::Texture texture; // текстура
 		sf::Sprite sprite; // спрайт
-		int move_vertical(float, const std::vector<Shapes::Obj>&, const std::vector<Movable>&); // подвинуть по вертикали
+		int move_vertical(float, const std::vector<Shapes::Obj>&, const std::vector<Movable>&, const Player&); // подвинуть по вертикали
 		bool is_levitating(const std::vector<Shapes::Obj>&, const std::vector<Movable>&) const; // находится ли в воздухе
 	public:
 		Movable();
 		Movable(const Movable&);
 		Movable(const std::string&, const sf::Vector2f&, const sf::Vector2f&, float);  // конструктор
 		int draw(sf::RenderWindow&) const; // вывод текстуры
-		virtual int update(float, const std::vector<Shapes::Obj>&, const std::vector<Movable>&); // обновление состояния
+		virtual int update(float, const std::vector<Shapes::Obj>&, const std::vector<Movable>&, const Player&); // обновление состояния
 		int move_on(float, const std::vector<Shapes::Obj>&, std::vector<Movable>&); // подвинуть на расстояние
 		float get_mass() const;
 		float left_boarder() const;
