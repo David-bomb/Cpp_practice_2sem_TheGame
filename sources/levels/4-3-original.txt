@@ -1,0 +1,11 @@
+2 Texture.jpg 0 1060 1000 20 0 0
+2 Texture.jpg 1000 1060 980 20 0 0
+2 Texture.jpg 0 0 1000 20 0 0
+2 Texture.jpg 1000 0 920 20 0 0
+2 Texture.jpg 0 0 20 1080 0 0
+2 Texture.jpg 480 0 20 900 0 0
+2 Texture.jpg 1900 0 20 1080 0 0
+2 Texture.jpg 0 250 300 20 0 0
+2 door.png 500 0 150 250 1 1
+2 door1.png 0 0 150 250 0 1
+0 200 0

@@ -1,15 +1,8 @@
-2 Texture.jpg 0 500 700 100 0 0
+2 Texture.jpg 0 700 1000 380 0 0
+2 Texture.jpg 1000 700 980 380 0 0
 2 Texture.jpg 0 0 1000 100 0 0
-2 Texture.jpg 1400 500 500 450 0 0
-2 death.png 700 600 100 50 1 0
-2 death.png 800 600 100 50 1 0
-2 death.png 900 600 100 50 1 0
-2 death.png 1000 600 100 50 1 0
-2 death.png 1100 600 100 50 1 0
-2 death.png 1200 600 100 50 1 0
-2 death.png 1300 600 100 50 1 0
-2 door.png 1600 250 150 250 1 1
-2 door.png 0 250 150 250 0 1
-1 box.jpg 600 300 100 100 2
-1 box.jpg 450 300 100 100 2
+2 Texture.jpg 1000 0 920 100 0 0
+2 Texture.jpg 0 0 100 700 0 0
+2 Texture.jpg 1830 0 100 700 0 0
+2 door.png 1680 450 150 250 1 1
 0 200 400

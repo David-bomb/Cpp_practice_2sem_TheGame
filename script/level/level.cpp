@@ -18,12 +18,12 @@ std::string Leveling::generate_sound_path(const std::string& name) {
 Leveling::SubLevel::SubLevel(int n, int number) : n(n), number(number) { ; }
 
 int Leveling::SubLevel::start(sf::RenderWindow& window) {
-	Audio::Sounds empty; // пустышка
+	Audio::Sounds empty; // РїСѓСЃС‚С‹С€РєР°
 	Audio::Sounds step("step.wav");
 	Audio::Sounds jump("jump.wav");
 	read_from_file(generate_path(generate_sublevel_original_name(number, n)));
 	sf::Clock clock;
-	double a = 0; // ЯРЛЫК
+	double a = 0;
 	int result;
 	Shapes::Obj BG("bg.png", sf::Vector2f(0, 0), sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT), 0, 1);
 	while (window.isOpen()) {
@@ -40,13 +40,16 @@ int Leveling::SubLevel::start(sf::RenderWindow& window) {
 				if (event.key.scancode == sf::Keyboard::Scan::W || event.key.scancode == sf::Keyboard::Scan::Up) {
 					player.jump(objects, movables, jump);
 				}
+				if (event.key.scancode == sf::Keyboard::Scan::Escape) {
+					return -1;
+				}
 			}
 		}
 		for (int i = 0; i != movables.size(); ++i) {
-			movables[i].update(time, objects, movables);
+			movables[i].update(time, objects, movables, player);
 		}
-		a += 0.01; // Может можно как-то связать со временем, посмотрим
-		if (a >= 1){ // таким образом мы задаем частоту шагов. чем выше предел a, тем реже шаги
+		a += 0.01; 
+		if (a >= 1){ // С‚Р°РєРёРј РѕР±СЂР°Р·РѕРј РјС‹ Р·Р°РґР°РµРј С‡Р°СЃС‚РѕС‚Сѓ С€Р°РіРѕРІ. С‡РµРј РІС‹С€Рµ РїСЂРµРґРµР» a, С‚РµРј СЂРµР¶Рµ С€Р°РіРё
 			result = player.update(time, objects, movables, step);
 			a = 0;
 		}
@@ -104,7 +107,7 @@ int Leveling::SubLevel::read_from_file(const std::string& path) {
 		switch (obj) {
 		case Objects::Player:
 			in >> _pos.x >> _pos.y;
-			player = { "player.png", _pos};
+			player = { "player2.png", _pos};
 			break;
 		case Objects::Obj:
 			in >> _name >> _pos.x >> _pos.y >> _size.x >> _size.y >> _harmful >> _passable;
@@ -139,11 +142,11 @@ int Leveling::Level::start(sf::RenderWindow& window) {
 	Audio::Sounds death("death.wav");
 	Audio::Sounds pass("passing.wav");
 	while (n != -1) {
-		if (n == 0) { // Персонаж погиб
+		if (n == 0) { // РџРµСЂСЃРѕРЅР°Р¶ РїРѕРіРёР±
 			death.play();
 			n = sublevels[0].start(window);
 		}
-		else if (n <= k && n > 0) { // Персонаж перешел в другой подуровень
+		else if (n <= k && n > 0) { // РџРµСЂСЃРѕРЅР°Р¶ РїРµСЂРµС€РµР» РІ РґСЂСѓРіРѕР№ РїРѕРґСѓСЂРѕРІРµРЅСЊ
 
 			pass.play();
 			n = sublevels[n - 1].start(window);

@@ -1,0 +1,8 @@
+2 Texture.jpg 100 500 900 100 0 0
+2 Texture.jpg 300 350 500 100 0 0
+2 Texture.jpg 300 100 400 100 0 0
+2 Texture.jpg 1200 500 500 450 0 0
+2 Texture.jpg 1400 300 200 50 0 0
+2 next.jpg 0 600 600 450 1 1
+2 previous.jpg 600 600 500 400 0 1
+0 100 200

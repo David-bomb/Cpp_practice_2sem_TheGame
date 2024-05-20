@@ -16,14 +16,18 @@ set(${project}_SOURCES
         "game/game.cpp"
         "level/level.cpp"
         "objects/objects.cpp"
-        "player/player.cpp")
+        "player/player.cpp"
+        "menu/menu.cpp"
+)
 
 set(${project}_HEADERS
         "constants/constants.h"
         "game/game.h"
         "level/level.h"
         "objects/objects.h"
-        "player/player.h")
+        "player/player.h"
+        "menu/menu.h"
+)
 
 set(${project}_SOURCE_LIST
         ${${project}_SOURCES}
