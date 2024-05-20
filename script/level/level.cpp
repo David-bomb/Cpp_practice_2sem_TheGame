@@ -18,12 +18,12 @@ std::string Leveling::generate_sound_path(const std::string& name) {
 Leveling::SubLevel::SubLevel(int n, int number) : n(n), number(number) { ; }
 
 int Leveling::SubLevel::start(sf::RenderWindow& window) {
-	Audio::Sounds empty; // ïóñòûøêà
+	Audio::Sounds empty; // пустышка
 	Audio::Sounds step("step.wav");
 	Audio::Sounds jump("jump.wav");
 	read_from_file(generate_path(generate_sublevel_original_name(number, n)));
 	sf::Clock clock;
-	double a = 0; // ßÐËÛÊ
+	double a = 0;
 	int result;
 	Shapes::Obj BG("bg.png", sf::Vector2f(0, 0), sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT), 0, 1);
 	while (window.isOpen()) {
@@ -45,8 +45,8 @@ int Leveling::SubLevel::start(sf::RenderWindow& window) {
 		for (int i = 0; i != movables.size(); ++i) {
 			movables[i].update(time, objects, movables);
 		}
-		a += 0.01; // Ìîæåò ìîæíî êàê-òî ñâÿçàòü ñî âðåìåíåì, ïîñìîòðèì
-		if (a >= 1){ // òàêèì îáðàçîì ìû çàäàåì ÷àñòîòó øàãîâ. ÷åì âûøå ïðåäåë a, òåì ðåæå øàãè
+		a += 0.01; 
+		if (a >= 1){ // таким образом мы задаем частоту шагов. чем выше предел a, тем реже шаги
 			result = player.update(time, objects, movables, step);
 			a = 0;
 		}
@@ -139,11 +139,11 @@ int Leveling::Level::start(sf::RenderWindow& window) {
 	Audio::Sounds death("death.wav");
 	Audio::Sounds pass("passing.wav");
 	while (n != -1) {
-		if (n == 0) { // Ïåðñîíàæ ïîãèá
+		if (n == 0) { // Персонаж погиб
 			death.play();
 			n = sublevels[0].start(window);
 		}
-		else if (n <= k && n > 0) { // Ïåðñîíàæ ïåðåøåë â äðóãîé ïîäóðîâåíü
+		else if (n <= k && n > 0) { // Персонаж перешел в другой подуровень
 
 			pass.play();
 			n = sublevels[n - 1].start(window);

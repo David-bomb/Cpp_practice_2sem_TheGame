@@ -46,7 +46,7 @@ menu::GameMenu::GameMenu(sf::RenderWindow& window, float menux, float menuy,
 	:mywindow(window), menu_X(menux), menu_Y(menuy), size_font(sizeFont), menu_Step(step)
 {
 	
-	if (!font.loadFromFile("minecraft-1-1.otf")) exit(32);
+	if (!font.loadFromFile(Leveling::generate_path("minecraft-1-1.otf"))) exit(32);
 	max_menu = index; 
 	mainMenu = new sf::Text[max_menu];     
 	
