@@ -3,9 +3,16 @@
 2 Texture.jpg 0 0 1000 20 0 0
 2 Texture.jpg 1000 0 920 20 0 0
 2 Texture.jpg 0 0 20 1080 0 0
+2 Texture.jpg 250 880 340 20 0 0
 2 Texture.jpg 480 0 20 900 0 0
+2 Texture.jpg 800 500 20 560 0 0
 2 Texture.jpg 1900 0 20 1080 0 0
 2 Texture.jpg 0 250 300 20 0 0
+2 Texture.jpg 500 250 300 20 0 0
+2 Texture.jpg 680 730 300 20 0 0
+2 death.png 250 860 230 20 1 0
+2 death.png 1200 1040 720 20 1 0
 2 door.png 500 0 150 250 1 1
 2 door1.png 0 0 150 250 0 1
+1 box.jpg 300 880 100 100 5
 0 200 0

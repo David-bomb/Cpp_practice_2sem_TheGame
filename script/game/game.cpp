@@ -4,7 +4,7 @@ void game() {
     using namespace sf;
     Audio::Music MainTheme("MainTheme.wav");
 
-        auto window = sf::RenderWindow{ sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Game" };
+        auto window = sf::RenderWindow{ sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Game", Style::Fullscreen };
         window.setFramerateLimit(144);
 
         window.setMouseCursorVisible(false);
