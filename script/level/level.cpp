@@ -40,10 +40,13 @@ int Leveling::SubLevel::start(sf::RenderWindow& window) {
 				if (event.key.scancode == sf::Keyboard::Scan::W || event.key.scancode == sf::Keyboard::Scan::Up) {
 					player.jump(objects, movables, jump);
 				}
+				if (event.key.scancode == sf::Keyboard::Scan::Escape) {
+					return -1;
+				}
 			}
 		}
 		for (int i = 0; i != movables.size(); ++i) {
-			movables[i].update(time, objects, movables);
+			movables[i].update(time, objects, movables, player);
 		}
 		a += 0.01; 
 		if (a >= 1){ // таким образом мы задаем частоту шагов. чем выше предел a, тем реже шаги
