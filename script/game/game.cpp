@@ -58,7 +58,7 @@ void game() {
             Event event;
             while (window.pollEvent(event))
             {
-                if (event.type == Event::KeyReleased)
+                if (event.type == Event::KeyPressed)
                 {
                     if (event.type == sf::Event::Closed) { window.close(); }
                     if (event.key.code == Keyboard::Up) { mymenu.MoveUp(); }
@@ -78,7 +78,7 @@ void game() {
                                 Event event1;
                                 while (window.pollEvent(event1))
                                 {
-                                    if (event1.type == Event::KeyReleased)
+                                    if (event1.type == Event::KeyPressed)
                                     {
                                         if (event1.type == sf::Event::Closed) { window.close(); }
                                         if (event1.key.code == Keyboard::Up) { mylvl.MoveUp(); }
@@ -138,7 +138,7 @@ void game() {
                                 Event event2;
                                 while (window.pollEvent(event2))
                                 {
-                                    if (event2.type == Event::KeyReleased)
+                                    if (event2.type == Event::KeyPressed)
                                     {
                                         if (event2.key.code == sf::Keyboard::Escape) { options = 0; }
                                         if (event2.key.code == Keyboard::Return) { options = 0; }
