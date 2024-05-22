@@ -1,7 +1,7 @@
 #include "level.h"
 
 std::string Leveling::generate_path(const std::string& name) {
-	return "../../../../../sources/" + name;
+	return "../../../../sources/" + name;
 }
 
 

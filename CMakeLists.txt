@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 set(project TheGame)
 project(${project} LANGUAGES CXX)
 
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
@@ -12,22 +13,27 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 set(${project}_SOURCES
-        main.cpp
-        "game/game.cpp"
-        "level/level.cpp"
-        "objects/objects.cpp"
-        "player/player.cpp"
-        "menu/menu.cpp"
+        "script/main.cpp"
+        "script/game/game.cpp"
+        "script/level/level.cpp"
+        "script/objects/objects.cpp"
+        "script/player/player.cpp"
+        "script/menu/menu.cpp"
 )
 
 set(${project}_HEADERS
-        "constants/constants.h"
-        "game/game.h"
-        "level/level.h"
-        "objects/objects.h"
-        "player/player.h"
-        "menu/menu.h"
+        "script/constants/constants.h"
+        "script/game/game.h"
+        "script/level/level.h"
+        "script/objects/objects.h"
+        "script/player/player.h"
+        "script/menu/menu.h"
 )
+
+add_custom_target(MyTarget ALL)
+add_custom_command(TARGET MyTarget PRE_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy_directory
+                       ${CMAKE_SOURCE_DIR}/"sources"/ $<TARGET_FILE_DIR:TheGame>/"sources")
 
 set(${project}_SOURCE_LIST
         ${${project}_SOURCES}
